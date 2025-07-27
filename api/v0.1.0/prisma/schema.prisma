@@ -44,6 +44,7 @@ model OrderItem {
 }
 
 enum OrderStatus {
+  PLACED
   PENDING
   PAID
   FULFILLED

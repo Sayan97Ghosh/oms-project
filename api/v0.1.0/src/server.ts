@@ -1,7 +1,11 @@
 import Fastify from 'fastify';
 import app  from './app';
+import dotenv from 'dotenv';
+dotenv.config(); 
 
 const isDev = process.env.NODE_ENV !== 'production';
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 8082;
+
 
 const server = Fastify({
   logger: isDev
@@ -19,8 +23,7 @@ const server = Fastify({
 });
 
 server.register(app);
-
-server.listen({ port: 8082 }, (err:any, address:any) => {
+server.listen({ port: PORT }, (err:any, address:any) => {
   if (err) {
     server.log.error(err);
     process.exit(1);
