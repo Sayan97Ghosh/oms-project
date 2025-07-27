@@ -9,6 +9,7 @@ import { connectToDatabase, prisma } from './config/db';
 import { orderRoutes } from './modules/orders/route/order.routes';
 import { orderItemRoutes } from './modules/orders/route/orderItem.routes';
 import { productRoutes } from './modules/products/route/product.routes';
+import { userRoutes } from './modules/customers/route/user.routes';
 
 const app: FastifyPluginAsync = async (fastify) => {
   // fastify.register(cors, { origin: true });
@@ -24,6 +25,7 @@ const app: FastifyPluginAsync = async (fastify) => {
   await fastify.register(orderRoutes, { prefix: '/v1/api'});
   await fastify.register(orderItemRoutes,{ prefix: '/v1/api'});
   await fastify.register(productRoutes, { prefix: '/v1/api' });
+  await fastify.register(userRoutes, { prefix: '/v1/api' });
 
 };
 
