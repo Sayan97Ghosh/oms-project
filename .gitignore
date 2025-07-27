@@ -1,7 +1,7 @@
-web/node_modules
-web/package-lock.json
-web/.next
-web/.env
-api/.env
-api/node_modules
-api/package-lock.json
+web/v0.1.0/node_modules
+web/v0.1.0/package-lock.json
+web/v0.1.0/.next
+web/v0.1.0/.env
+api/v0.1.0/.env
+api/v0.1.0/node_modules
+api/v0.1.0/package-lock.json
