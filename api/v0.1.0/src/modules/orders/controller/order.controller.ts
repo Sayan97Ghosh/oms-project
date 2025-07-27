@@ -1,4 +1,4 @@
-import { FastifyRequest, FastifyReply } from 'fastify';
+import { FastifyRequest, FastifyReply, FastifyInstance } from 'fastify';
 import { createOrder, getOrderById, getAllOrders, updateOrderStatus } from '../service/order.service';
 import { OrderStatus } from '@prisma/client';
 
@@ -25,5 +25,20 @@ export const handleGetOrders = async (_req: FastifyRequest, reply: FastifyReply)
 
 export const handleUpdateStatus = async (req: FastifyRequest<{ Params: { id: string }, Body: { status: OrderStatus } }>, reply: FastifyReply) => {
   const order = await updateOrderStatus(req.params.id, req.body.status);
+  
+  //real time update
+  const fastify = req.server as FastifyInstance & { websocketClients: Set<any> };
+
+  const message = JSON.stringify({
+    event: 'ORDER_STATUS_UPDATED',
+    orderId: req.params.id,
+    status: order.status,
+  });
+
+  fastify.websocketClients.forEach((client) => {
+    if (client.readyState === 1) {
+      client.send(message);
+    }
+  });
   return reply.send(order);
 };
